@@ -6,7 +6,8 @@
 from py10n import settings
 
 import md5, os
-from os.path import join
+from os.path import abspath, dirname, exists, isdir, join
+from sys import exit
 
 def computePoHashValue(path):
     """Compute and return  file hash value"""
@@ -66,3 +67,18 @@ def messagePath(type, template):
             return join(settings.PY10N_LANG, "messages")
         else:
             return join(settings.PY10N_LANG, "docmessages")
+
+def checkFile(filename):
+    """Check it is possible to write filename or exit"""
+    filename=abspath(filename)
+    if isdir(filename):
+        print "%s is a directory. Please give a full path with a filename as argument." % filename
+        exit(1)
+    if exists(filename):
+        if not os.access(filename, os.W_OK):
+            print "File %s is not writable !" % filename
+            exit(1)
+    else:
+        if not os.access(dirname(filename), os.W_OK):
+            print "Directory %s is not writable !" % dirname(filename)
+            exit(1)

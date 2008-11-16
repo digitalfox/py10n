@@ -14,18 +14,17 @@ setup_environ(settings)
 
 from py10n.dj10n.views  import translatorsPage, bookingPage
 from py10n.dj10n.models import Pofile, Branch, Module
-from py10n.dj10n.utils  import computePoHashValue, updateGettextStats, updatePologyStats
+from py10n.dj10n.utils  import computePoHashValue, checkFile, updateGettextStats, updatePologyStats
 from py10n.dj10n.shell import Shell
-from py10n import settings
+from py10n.dj10n.pology import posieve
 
 
-from os.path import abspath, join, exists, dirname, isdir
-from os import curdir, access, popen, listdir
+from os.path import join
+from os import popen, listdir
 from optparse import OptionParser
 from sys import exit
 import codecs
 import re
-import os
 
 SIEVES={"check_rules":"pology-rules-errors.xml",
        "check-spell":"pology-spell-errors.xml"}
@@ -81,18 +80,8 @@ def createPologyXMLStat(pologyXmlPath, type="gui", sieve="check_rules"):
     """Create POlogy xml errors file for all modules
     @param pologyXMLPath: Path where XML file will be write"""
     #TODO: use new function from Pology modules
-    mPath=" ".join([join(settings.PY10N_FILE_BASEPATH, m.poPath()) for m in Module.objects.filter(type=type)]) 
-    try:
-        pologyPath=join(settings.PY10N_FILE_BASEPATH,"trunk/l10n-support/")
-        cmd="%s/pology/scripts/posieve.py -slang:fr -sxml:%s %s %s" % \
-            (pologyPath, join(pologyXmlPath, SIEVES[sieve]), sieve, mPath)
-        process=popen(cmd)
-        result=process.readlines()
-        process.close()
-        print "".join(result)
-    except Exception, e:
-        print "Cannot compute pology errors statistics. Error was : %s" % (e)
-    
+    mPath=" ".join([join(settings.PY10N_FILE_BASEPATH, m.poPath()) for m in Module.objects.filter(type=type)])
+    posieve(sieve, [("xml", join(pologyXmlPath, SIEVES[sieve])), ("lang", settings.PY10N_LANG)], mPath) 
 
 def sync(type="gui"):
     """Sync filesystem modules and po files with database"""
@@ -186,22 +175,6 @@ def sync(type="gui"):
     for po in poToBeRemoved:
         print "Removed from database : %s/%s (%s)" % (po.module.name, po.name, po.module.branch.name)
         po.delete()
-
-    
-def checkFile(filename):
-    """Check it is possible to write filename or exit"""
-    filename=abspath(filename)
-    if isdir(filename):
-        print "%s is a directory. Please give a full path with a filename as argument." % filename
-        exit(1)
-    if exists(filename):
-        if not access(filename, os.W_OK):
-            print "File %s is not writable !" % filename
-            exit(1)
-    else:
-        if not access(dirname(filename), os.W_OK):
-            print "Directory %s is not writable !" % dirname(filename)
-            exit(1)
 
 def parseOptions():
     """Command line option parsing"""

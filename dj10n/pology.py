@@ -6,8 +6,7 @@
 
 from os.path import join
 from os import popen
-
-from Module import Module
+import settings
 
 def posieve(sieve, options, target):
     """@param sieve: the sieve to be used
@@ -15,7 +14,7 @@ def posieve(sieve, options, target):
        @options: list of (key, value) that will be give to pology as -skey:value
        """
     try:
-        pologyPath=join(Module.basepath,"trunk/l10n-support/")
+        pologyPath=join(settings.PY10N_FILE_BASEPATH, "trunk/l10n-support/")
         optionsString=" ".join("-s%s:%s" % (k, v) for (k, v) in options)
         cmd="%s/pology/scripts/posieve.py %s %s %s" % \
             (pologyPath, optionsString, sieve, target)

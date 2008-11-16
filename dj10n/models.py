@@ -14,8 +14,8 @@ from os.path import join
 TYPES=(("gui", "Application"), ("doc", "Documentation"))
 
 class Branch(models.Model):
-    name = models.CharField(max_length=90)
-    path = models.CharField(max_length=90)
+    name = models.CharField(max_length=90, unique=True)
+    path = models.CharField(max_length=90, unique=True)
     
     def __unicode__(self): return self.name
 

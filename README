@@ -1,7 +1,20 @@
-Py10n scripts are used to manage french team translation pages.
+Py10n scripts are used to manage KDE team translation pages.
+
+INSTALLATION
+*****************************************
+
+Edit settings.py to:
+- setup you database
+- setup you SVN path : PY10N_FILE_BASEPATH
+- setup your language : PY10N_LANG
+
+Create tables & index and populates your databse with the createDB.py script
+
+Start synchronisation "py10n -sg" for gui or "py10n -sd" for docs
+
 
 *****************************************
-Options:
+py10n options:
   -h, --help            show this help message and exit
   -f FILENAME, --file=FILENAME
                         Write page to FILE

@@ -1,8 +1,14 @@
 Py10n scripts are used to manage KDE team translation pages.
 
+PREREQUISITE
+*****************************************
+- python 2.4 or newer
+- sqlite3 or mysql database
+- django framework 1.0 (http://www.djangoproject.com/)
+
+
 INSTALLATION
 *****************************************
-
 Edit settings.py to:
 - setup you database
 - setup you SVN path : PY10N_FILE_BASEPATH

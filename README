@@ -1,0 +1,41 @@
+Py10n scripts are used to manage french team translation pages.
+
+*****************************************
+Options:
+  -h, --help            show this help message and exit
+  -f FILENAME, --file=FILENAME
+                        Write page to FILE
+  -t TYPE, --type=TYPE  Page type (can be po, translator or stat)
+  -s, --sync            Synchronise database with files
+  -u, --udpate          Update from svn
+  -p, --po-stat         Compute gettext and Ortho messages statistics
+  -c, --commandLine     Command line tool (shell) for py10n
+
+
+*****************************************
+Sample usage:
+
+echo "Synchronise database..."
+py10n -sg
+
+echo "Update ORtho and gettext stats ..."
+py10n -pg
+
+echo "Create PO reservation main page..."
+py10n -t po -g -f svn/www/fr/apps/wip-apps.php
+
+echo "Create per translator PO page..."
+py10n -t translator -g -f svn/www/fr/apps/wip-translator.php
+
+echo "Create statistics page..."
+py10n -t stat -g -f svn/www/fr/apps/wip-stat.php
+
+echo "Commit pages ..."
+cd $BASE/svn/www/fr/apps
+svn commit -m "automatic update" wip-apps.php wip-translator.php wip-stat.php
+
+*****************************************
+Database model can be found with sample data in the mysql.dump file
+
+*****************************************
+Contact: Sebastien.Renard@digitalfox.org

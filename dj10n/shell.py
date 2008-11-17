@@ -274,9 +274,9 @@ class Shell(cmd.Cmd):
     def __reservePo(self, translator, po):
         po.translator=translator
         if translator is None:
-            po.bookingdate=None
+            po.startdate=None
         else:
-            po.bookingdate=time.strftime('%d/%m/%Y')
+            po.startdate=time.strftime('%d/%m/%Y')
         po.save()
         print "Reservation updated for %s" % po.name
     

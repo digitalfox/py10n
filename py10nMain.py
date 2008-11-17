@@ -235,7 +235,8 @@ def main():
         exit(1)
     elif options.filename and options.type:
         # Check file
-        checkFile(options.filename)
+        if not checkFile(options.filename):
+            exit(1)
         # Choose correct type
         if options.type=="po":
             print "Creating PO page"

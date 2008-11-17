@@ -37,7 +37,7 @@ def poPage(filename, type):
 def translatorPage(filename, type):
     """Build the per translator page and write it to a file
     @param filename: website page file name"""
-    pass
+    file(filename, "w").write(translatorsPage(type).encode("UTF-8"))
 
 def statPage(filename):
     """Build the statistics page and write it to a file
@@ -45,7 +45,7 @@ def statPage(filename):
     pass
 
 def poStat(pologyXmlStat, type='gui'):
-    """Process PO with the pology tool"""
+    """Update PO statistics"""
     for po in Pofile.objects.filter(type=type):
         md5sum=computePoHashValue(po.filePath())
         if po.md5sum!=md5sum:

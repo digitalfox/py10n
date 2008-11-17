@@ -65,7 +65,7 @@ $mail="{{ mail|safe }}";
 <tr><td>Totaux</td><td>&nbsp;</td><td>3070</td><td>86</td><td class='pology'>746</td><td>10743</td></tr></tfoot>
 </table><hr />
 
-{% for translator in translators %}
+{% for translator, translator_values in translators.items %}
     <h3 id='{{ translator.email }}'><span class='{{ translator.firstname }} {{ translator.lastname }}'>{{ translator.firstname }} {{ translator.lastname }}</span></h3>
     <table class="poFiles"><thead><tr>
         <th class="nom">Nom</th>
@@ -75,7 +75,7 @@ $mail="{{ mail|safe }}";
         <th class="pology" title="Nombre de messages comportants des erreurs selon l'outil « Pology »."><a href='#legend'>À vérifier</a></th>
         <th class="effectuer" title="Nombre de messages déjà traduits."><a href='#legend'>Traduits</a></th>
     </tr></thead>    
-    {% for po in translator.pofile_set.all %}
+    {% for po in translator_values.pos %}
         <tr class="{% cycle 'odd' 'even' %} {{ po.getCss }}">
         <th><a href='{{ po.webPath }}'>{{ po.name }}</a></th>
         <td class='bookingDate'>{{ po.startdate|default_if_none:"-"}}</td>
@@ -88,7 +88,12 @@ $mail="{{ mail|safe }}";
         </tr>
     {% endfor %}
     </tbody><tfoot>
-    <tr><td>Totaux</td><td>&nbsp;</td><td>1087</td><td>996</td><td class='pology'>64</td><td>408</td>
+    <tr><td>Totaux</td>
+    <td>&nbsp;</td>
+    <td>{{ translator_values.untranslated }}</td>
+    <td>{{ translator_values.fuzzy }}</td>
+    <td class='pology'>{{ translator_values.error }}</td>
+    <td>{{ translator_values.translated }}</td>
     </tr></tfoot></table><hr />
 {% endfor %}
 

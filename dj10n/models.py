@@ -98,6 +98,13 @@ class Pofile(models.Model):
     def filePath(self):
         return join(settings.PY10N_FILE_BASEPATH, self.path())
 
+    def poFilePath(self):
+        return join(settings.PY10N_FILE_BASEPATH,
+                    self.module.branch.path,
+                    messagePath(self.type, False),
+                    self.module.name,
+                    self.name+".po")
+
     def webPath(self):
         return "http://websvn.kde.org/*checkout*/"+self.path()
 

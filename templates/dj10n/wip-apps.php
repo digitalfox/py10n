@@ -40,9 +40,9 @@ $mail="{{ mail|safe }}";
 {% endfor %}
 
 
-{% for branch in branches %}
+{% for branch, modules in branches.items %}
     <h3>Branche {{ branch.name }}</h3>
-    {% for module in branch.module_set.all %} {% ifequal module.type type %}
+    {% for module in modules %}
         <h3 id='{{ module.name }}'>{{ module.name }} (<span class='{{ module.branch.name }}'>{{ module.branch.name }}</span>)</h3>
         <table class="poFiles">
         <thead><tr>
@@ -70,7 +70,7 @@ $mail="{{ mail|safe }}";
             </tr>            
          {% endfor %}
          </tbody></table><hr />         
-     {% endifequal %}{% endfor %}    
+     {% endfor %}    
 {% endfor %}
 
 <div id="legend">

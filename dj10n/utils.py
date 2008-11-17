@@ -21,7 +21,11 @@ def computePoHashValue(path):
 def updateGettextStats(po):
     result=""
     try:
-        process=os.popen("LANG=C; msgfmt --statistics "+po.filePath()+" 2>&1")
+        path=po.poFilePath()
+        if not exists(path):
+            # Use template
+            path=po.filePath()
+        process=os.popen("LANG=C; msgfmt --statistics %s 2>&1" % path)
         result=process.readlines()
         process.close()
     except Exception, e:

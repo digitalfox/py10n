@@ -276,7 +276,7 @@ class Shell(cmd.Cmd):
         if translator is None:
             po.startdate=None
         else:
-            po.startdate=time.strftime('%d/%m/%Y')
+            po.startdate=time.strftime('%Y-%m-%d')
         po.save()
         print "Reservation updated for %s" % po.name
     

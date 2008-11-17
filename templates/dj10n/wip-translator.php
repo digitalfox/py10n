@@ -78,7 +78,7 @@ $mail="{{ mail|safe }}";
     {% for po in translator_values.pos %}
         <tr class="{% cycle 'odd' 'even' %} {{ po.getCss }}">
         <th><a href='{{ po.webPath }}'>{{ po.name }}</a></th>
-        <td class='bookingDate'>{{ po.startdate|default_if_none:"-"}}</td>
+        <td class='bookingDate'>{{ po.startdate|date:"j b y"}}</td>
         <td>{{ po.untranslated }}</td>
         <td>{{ po.fuzzy }}</td>
         <td class="pology"><a href='../pology-errors.php?po={{ po.name }}.po&package={{ module.name }}&branch={{ branch.path }}&mode=gui'>{{ po.errortho }}
@@ -114,7 +114,7 @@ $mail="{{ mail|safe }}";
                    </ul>
                    </div>
                    
-        <div id="lastUpdate">Dernière mise à jour : dim 26 oct 2008 16:05:15 CET </div><?php
+        <div id="lastUpdate">Dernière mise à jour : {{ now|date:"l j F Y, G:i:s" }}</div><?php
             include "footer.inc";
             ?>
             

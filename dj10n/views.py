@@ -4,6 +4,8 @@
 # Code licensed under GNU GPL V2
 
 
+from datetime import datetime
+
 from django.template.loader import get_template
 from django.template import Context
 
@@ -21,7 +23,8 @@ def bookingPage(type="gui"):
 
     contexte=Context({"name" : NAME,
                        "mail" : MAIL,
-                       "branches" : branches })
+                       "branches" : branches,
+                       "now" : datetime.now() })
     return template.render(contexte)
     
 def translatorsPage(type="gui"):
@@ -44,6 +47,7 @@ def translatorsPage(type="gui"):
     contexte=Context({"name" : NAME,
                        "mail" : MAIL,
                        "translators" : translators,
-                       "orphan_pos" : Pofile.objects.filter(translator=None).filter(type=type)
+                       "orphan_pos" : Pofile.objects.filter(translator=None).filter(type=type),
+                       "now" : datetime.now()
                        })
     return template.render(contexte)

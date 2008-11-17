@@ -60,7 +60,7 @@ $mail="{{ mail|safe }}";
             <th><a href='{{ po.webPath }}'>{{ po.name }}</a></th>
             {% if po.translator %}<td class='translator'><a href='mailto:{{ po.translator.email }}'>{{ po.translator.firstname }} {{ po.translator.lastname }}</a></td>
             {% else %}<td class='translator'><a href='mailto:{{ mail|safe }}'><em>Fichier à réserver</em></a></td>{% endif %}
-            <td class='bookingDate'>{{ po.startdate|default_if_none:"-"}}</td>
+            <td class='bookingDate'>{{ po.startdate|date:"j b y"}}</td>
             <td>{{ po.untranslated }}</td>
             <td>{{ po.fuzzy }}</td>
             <td class="pology"><a href='../pology-errors.php?po={{ po.name }}.po&package={{ module.name }}&branch={{ branch.path }}&mode=gui'>{{ po.errortho }}
@@ -90,5 +90,5 @@ $mail="{{ mail|safe }}";
 </ul>
 </div>
                    
-<div id="lastUpdate">Dernière mise à jour : ven 24 oct 2008 18:58:28 CEST </div>
+<div id="lastUpdate">Dernière mise à jour : {{ now|date:"l j F Y, G:i:s" }}</div>
 <?php include "footer.inc"; ?>

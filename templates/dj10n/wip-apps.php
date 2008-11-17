@@ -14,17 +14,17 @@ $mail="{{ mail|safe }}";
 <a href="mailto:{{ mail|safe }}">{{ name }}</a>.</p>
 <div id="sommaire"><h3>Sommaire</h3>
        <ul><li>
-       <a href="wip-apps.php">
+       <a href="apps.php">
                <img src="../img/package.png" alt="Affectation" />
                Applications classées par module
                </a>
        </li><li>
-               <a href="wip-translator.php">
+               <a href="translators.php">
                <img src="../img/affectation.png" alt="Affectation" />
                Traductions affectées par traducteur
                </a>
        </li><li>
-               <a href="wip-stat.php">
+               <a href="stats.php">
                <img src="../img/stats.png" alt="Affectation" />
                Statistiques de traduction
                </a>

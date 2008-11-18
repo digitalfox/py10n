@@ -18,7 +18,8 @@ MAIL="Sebastien.Renard&#64;digitalfox.org"
 def bookingPage(type="gui"):
     template=get_template("dj10n/wip-apps.php")
     branches={}
-    for branch in Branch.objects.all():
+    #TODO: find a better way to filter branch ?
+    for branch in [b for b in Branch.objects.all() if b.module_set.count()!=0]:
         branches[branch]=branch.module_set.filter(type=type)
 
     contexte=Context({"name" : NAME,

@@ -54,8 +54,8 @@ $mail="{{ mail|safe }}";
     <td class='bookingDate'>{{ po.startdate|default_if_none:"-"}}</td>
     <td>{{ po.untranslated }}</td>
     <td>{{ po.fuzzy }}</td>
-    <td class="pology"><a href='../pology-errors.php?po={{ po.name }}.po&package={{ module.name }}&branch={{ branch.path }}&mode=gui'>{{ po.errortho }}
-    {% ifequal po.errortho 0 %}<img src='../img/status/ok.png' alt='Aucune erreur' />
+    <td class="pology"><a href='../pology-errors.php?po={{ po.name }}.po&package={{ module.name }}&branch={{ branch.path }}&mode=gui'>{{ po.error }}
+    {% ifequal po.error 0 %}<img src='../img/status/ok.png' alt='Aucune erreur' />
     {% else %}<img src='../img/status/warning.png' alt='Erreurs Pology' /> {% endifequal %}</a></td>
     <td>{{ po.translated }}</td>
     </tr>            

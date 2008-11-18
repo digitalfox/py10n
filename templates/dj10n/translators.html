@@ -1,6 +1,6 @@
 <?php
 // Auteur:   {{ name }}
-$page_title = "Traduction en français des applications de KDE";
+$page_title = "Traduction en français de KDE";
 $site_root = "./";
 include_once ("functions.inc");
 include "header.inc";
@@ -14,14 +14,14 @@ $mail="{{ mail|safe }}";
 <a href="mailto:{{ mail|safe }}">{{ name }}</a>.</p>
 <div id="sommaire"><h3>Sommaire</h3>
        <ul><li>
-               <a href="apps.php">
+               <a href="pofiles.php">
                <img src="../img/package.png" alt="Affectation" />
-               Applications classées par module
+               Fichiers de traduction classés par module
                </a>
        </li><li>
                <a href="translators.php">
                <img src="../img/affectation.png" alt="Affectation" />
-               Traductions affectées par traducteur
+               Fichiers de traduction classés par traducteur
                </a>
        </li><li>
                <a href="stats.php">
@@ -38,7 +38,7 @@ $mail="{{ mail|safe }}";
 </tr></table><hr />
 
 
-<h3 id=''><span class='Applications orphelines'>Applications orphelines</span></h3>
+<h3 id=''><span class='Orphelins'>Fichiers de traduction orphelins</span></h3>
 <table class="poFiles"><thead><tr>
     <th class="nom">Fichier à traduire</th>
     <th class="bookingDate">Date d'affectation</th>

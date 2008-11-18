@@ -16,7 +16,7 @@ NAME="Sébastien Renard"
 MAIL="Sebastien.Renard&#64;digitalfox.org"
 
 def bookingPage(type="gui"):
-    template=get_template("dj10n/wip-apps.php")
+    template=get_template("dj10n/pofiles.html")
     branches={}
     #TODO: find a better way to filter branch ?
     for branch in [b for b in Branch.objects.all() if b.module_set.count()!=0]:
@@ -29,7 +29,7 @@ def bookingPage(type="gui"):
     return template.render(contexte)
     
 def translatorsPage(type="gui"):
-    template=get_template("dj10n/wip-translator.php")
+    template=get_template("dj10n/translators.html")
     translators={}
     activeTranslators_id=Pofile.objects.exclude(translator__exact=None).values_list('translator', flat=True).distinct()
     for translator in Translator.objects.filter(id__in=activeTranslators_id):

@@ -12,7 +12,7 @@ import settings
 setup_environ(settings)
 
 
-from py10n.dj10n.views  import translatorsPage, bookingPage
+from py10n.dj10n.views  import translatorsPage, bookingPage, statsPage
 from py10n.dj10n.models import Pofile, Branch, Module
 from py10n.dj10n.utils  import computePoHashValue, checkFile, updateGettextStats, updatePologyStats
 from py10n.dj10n.shell import Shell
@@ -39,10 +39,10 @@ def translatorPage(filename, type):
     @param filename: website page file name"""
     file(filename, "w").write(translatorsPage(type).encode("UTF-8"))
 
-def statPage(filename):
+def statPage(filename, type):
     """Build the statistics page and write it to a file
     @param filename: website page file name"""
-    pass
+    file(filename, "w").write(statsPage(type).encode("UTF-8"))
 
 def poStat(pologyXmlStat, type='gui'):
     """Update PO statistics"""
@@ -246,7 +246,7 @@ def main():
             translatorPage(options.filename, type)
         elif options.type=="stat":
             print "Creating statistics page"
-            statPage(options.filename)
+            statPage(options.filename, type)
         else:
             print "Ouha. Something goes wrong, type should have be correctly defined here !!!"
             exit(1)

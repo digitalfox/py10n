@@ -1,0 +1,54 @@
+<?php
+// Auteur:   {{ name }}
+$page_title = "Traduction en français de KDE";
+$site_root = "./";
+include_once ("functions.inc");
+include "header.inc";
+$site_title = "KDE en français";
+$site_external = true;
+$showedit = false;
+$name="{{ name }}";
+$mail="{{ mail|safe }}";
+?>
+
+<div id="sommaire"><h3>Sommaire</h3>
+       <ul><li>
+       <a href="pofiles.php">
+               <img src="../img/package.png" alt="Affectation" />
+               Fichiers de traduction classés par module
+               </a>
+       </li><li>
+               <a href="translators.php">
+               <img src="../img/affectation.png" alt="Affectation" />
+               Fichiers de traduction classés par traducteur
+               </a>
+       </li><li>
+               <a href="stats.php">
+               <img src="../img/stats.png" alt="Affectation" />
+               Statistiques de traduction
+               </a>
+       </li></ul></div><hr />
+
+
+
+
+    <table class="poFiles">
+        <thead><tr>
+            <th class="nom">Branche</th>
+            <th class="indicator">Total</th>
+            <th class="indicator">100 % traduit</th>
+            <th class="indicator">100 % traduit et sans erreur</th>
+         </tr></thead>
+         <tbody>
+         {% for line in poNumber %}
+            <tr class="{% cycle 'odd' 'even' %}">
+            {% for cell in line %}
+                <td><center>{% ifequal cell "all" %}Global{% else %}{{ cell }}{% endifequal %}</center></td>
+            {% endfor %}
+            </tr>            
+         {% endfor %}
+         </tbody>
+    </table><hr />
+                   
+<div id="lastUpdate">Dernière mise à jour : {{ now|date:"l j F Y, G:i:s" }}</div>
+<?php include "footer.inc"; ?>

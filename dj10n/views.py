@@ -52,3 +52,40 @@ def translatorsPage(type="gui"):
                        "now" : datetime.now()
                        })
     return template.render(contexte)
+
+def statsPage(type="gui"):
+    template=get_template("dj10n/stats.html")
+    # Non empty branches
+    branches=[b for b in Branch.objects.all() if b.module_set.count()!=0]
+
+    # Base query seperfect["all"]=pos_perfect.count()t used to build stats - indicators are explainted below
+    pos=Pofile.objects.filter(type=type)
+    pos_completed=pos.filter(fuzzy=0).filter(untranslated=0)
+    pos_perfect=pos_completed.filter(error=0)
+
+    # Po number stat array
+    # Each rows have branch name and the following indicators
+    #    -  Total number of pofiles
+    #     - Number of fully translated without fuzzy
+    #     - Number of completed files without errors
+    poNumber=[]
+
+    # po number stats for all branch
+    poNumber.append(["all", pos.count(), pos_completed.count(), pos_perfect.count()])
+
+
+    # Same indicators for each branch
+    for branch in branches:
+        stat=[branch.name]
+        stat.append(pos.filter(module__branch=branch).count())
+        stat.append(pos_completed.filter(module__branch=branch).count())
+        stat.append(pos_perfect.filter(module__branch=branch).count())
+        poNumber.append(stat)
+
+    contexte=Context({"name" : NAME,
+                       "mail" : MAIL,
+                       "branches" : [b.name for b in branches]+["all"],
+                       "poNumber" : poNumber,
+                       "now" : datetime.now()
+                       })
+    return template.render(contexte)

@@ -8,6 +8,7 @@ from datetime import datetime
 
 from django.template.loader import get_template
 from django.template import Context
+from django.db.models import Q
 
 from py10n.dj10n.models import Branch, Pofile, Translator
 
@@ -82,10 +83,16 @@ def statsPage(type="gui"):
         stat.append(pos_perfect.filter(module__branch=branch).count())
         poNumber.append(stat)
 
+    # To PO that need works in core KDE modules
+    urgentPo=Pofile.objects.filter(module__name__startswith="kde").exclude(module__name="kdereview") # Core KDE modules
+    urgentPo=urgentPo.filter(~Q(untranslated=0) | ~Q(fuzzy=0)).order_by("untranslated", "fuzzy").reverse() # That need word
+    urgentPo=urgentPo[0:20] # 20 most urgent
+
     contexte=Context({"name" : NAME,
                        "mail" : MAIL,
                        "branches" : [b.name for b in branches]+["all"],
                        "poNumber" : poNumber,
+                       "urgentPo" : urgentPo,
                        "now" : datetime.now()
                        })
     return template.render(contexte)

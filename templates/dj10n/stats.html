@@ -29,9 +29,7 @@ $mail="{{ mail|safe }}";
                </a>
        </li></ul></div><hr />
 
-
-
-
+<h3>Fichiers traduits par branche</h3>
     <table class="poFiles">
         <thead><tr>
             <th class="nom">Branche</th>
@@ -49,6 +47,36 @@ $mail="{{ mail|safe }}";
          {% endfor %}
          </tbody>
     </table><hr />
+
+    <h3>Les fichiers à traduire en priorité pour le coeur de KDE</h3>
+    <table class="poFiles">
+        <thead><tr>
+            <th class="nom">Nom</th>
+            <th class="affectation">Affectation</th>
+            <th class="bookingDate">Date d'affectation</th>
+            <th class="traduire" title="Nombre de messages non traduits."><a href='#legend'>À traduire</a></th>
+            <th class="actualiser" title="Nombre de messages dont le message origine ou le contexte a changé."><a href='#legend'>À mettre à jour</a></th>
+            <th class="pology" title="Nombre de messages comportants des erreurs selon l'outil « Pology »."><a href='#legend'>À vérifier</a></th>
+            <th class="effectuer" title="Nombre de messages déjà traduits."><a href='#legend'>Traduits</a></th>
+         </tr></thead>
+         <tbody>
+
+            {% for po in urgentPo %}
+	            <tr class="{% cycle 'odd' 'even' %} {{ po.getCss }}">
+	            <th><a href='{{ po.webPath }}'>{{ po.name }}</a></th>
+	            {% if po.translator %}<td class='translator'><a href='mailto:{{ po.translator.email }}'>{{ po.translator.firstname }} {{ po.translator.lastname }}</a></td>
+	            {% else %}<td class='translator'><a href='mailto:{{ mail|safe }}'><em>Fichier à réserver</em></a></td>{% endif %}
+	            <td class='bookingDate'>{{ po.startdate|date:"j b y"}}</td>
+	            <td>{{ po.untranslated }}</td>
+	            <td>{{ po.fuzzy }}</td>
+	            <td class="pology"><a href='../pology-errors.php?po={{ po.name }}.po&amp;package={{ module.name }}&amp;branch={{ branch.path }}&amp;mode=gui'>{{ po.error }}
+	            {% ifequal po.error 0 %}<img src='../img/status/ok.png' alt='Aucune erreur' />
+	            {% else %}<img src='../img/status/warning.png' alt='Erreurs Pology' /> {% endifequal %}</a></td>
+	            <td>{{ po.translated }}</td>
+	            </tr>
+            {% endfor %}
+         </tbody></table><hr />
+
                    
 <div id="lastUpdate">Dernière mise à jour : {{ now|date:"l j F Y, G:i:s" }}</div>
 <?php include "footer.inc"; ?>

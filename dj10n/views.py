@@ -19,8 +19,7 @@ MAIL="Sebastien.Renard&#64;digitalfox.org"
 def bookingPage(type="gui"):
     template=get_template("dj10n/pofiles.html")
     branches={}
-    #TODO: find a better way to filter branch ?
-    for branch in [b for b in Branch.objects.all() if b.module_set.count()!=0]:
+    for branch in Branch.objects.filter(module__pk__isnull=False).distinct():
         branches[branch]=branch.module_set.filter(type=type)
 
     contexte=Context({"name" : NAME,
@@ -32,8 +31,7 @@ def bookingPage(type="gui"):
 def translatorsPage(type="gui"):
     template=get_template("dj10n/translators.html")
     translators={}
-    activeTranslators_id=Pofile.objects.exclude(translator__exact=None).values_list('translator', flat=True).distinct()
-    for translator in Translator.objects.filter(id__in=activeTranslators_id):
+    for translator in Translator.objects.filter(pofile__pk__isnull=False).distinct():
         translators[translator]={}
         translators[translator]["pos"]=translator.pofile_set.filter(type=type)
         error=fuzzy=untranslated=translated=0

@@ -3,7 +3,6 @@
 # Sébastien Renard (sebastien.renard@digitalfox.org)
 # Code licensed under GNU GPL V2
 
-
 from datetime import datetime
 
 from django.template.loader import get_template
@@ -11,10 +10,7 @@ from django.template import Context
 from django.db.models import Q
 
 from py10n.dj10n.models import Branch, Pofile, Translator
-
-#TODO: move that in settings
-NAME="Sébastien Renard"
-MAIL="Sebastien.Renard&#64;digitalfox.org"
+from py10n.settings import PY10N_NAME, PY10N_MAIL
 
 def bookingPage(type="gui"):
     template=get_template("dj10n/pofiles.html")
@@ -22,8 +18,8 @@ def bookingPage(type="gui"):
     for branch in Branch.objects.filter(module__pk__isnull=False).distinct():
         branches[branch]=branch.module_set.filter(type=type)
 
-    contexte=Context({"name" : NAME,
-                       "mail" : MAIL,
+    contexte=Context({"name" : PY10N_NAME,
+                       "mail" : PY10N_MAIL,
                        "branches" : branches,
                        "now" : datetime.now() })
     return template.render(contexte)
@@ -44,8 +40,8 @@ def translatorsPage(type="gui"):
         translators[translator]["fuzzy"]=fuzzy
         translators[translator]["untranslated"]=untranslated
         translators[translator]["translated"]=translated
-    contexte=Context({"name" : NAME,
-                       "mail" : MAIL,
+    contexte=Context({"name" : PY10N_NAME,
+                       "mail" : PY10N_MAIL,
                        "translators" : translators,
                        "orphan_pos" : Pofile.objects.filter(translator=None).filter(type=type),
                        "now" : datetime.now()
@@ -99,8 +95,8 @@ def statsPage(type="gui"):
     urgentPo=urgentPo.filter(~Q(untranslated=0) | ~Q(fuzzy=0)).order_by("untranslated", "fuzzy").reverse() # That need word
     urgentPo=urgentPo[0:20] # 20 most urgent
 
-    contexte=Context({"name" : NAME,
-                       "mail" : MAIL,
+    contexte=Context({"name" : PY10N_NAME,
+                       "mail" : PY10N_MAIL,
                        "branches" : [b.name for b in branches]+["all"],
                        "poNumber" : poNumber,
                        "translatorsStat": translatorsStat,

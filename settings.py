@@ -91,3 +91,8 @@ PY10N_FILE_BASEPATH="/home/fox/prog/i18n/svn/"
 
 # l10n KDE language (must be in lowercase !)
 PY10N_LANG="fr"
+
+# Coordinator name and mail (tips use &#64; entity for the @ in your mail addresse to fool spammers)
+PY10N_NAME="Sébastien Renard"
+PY10N_MAIL="Sebastien.Renard&#64;digitalfox.org"
+

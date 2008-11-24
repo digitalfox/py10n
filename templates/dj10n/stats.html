@@ -48,6 +48,17 @@ $mail="{{ mail|safe }}";
          </tbody>
     </table><hr />
 
+<h3>Traducteurs</h3>
+    <table class="poFiles">
+         {% for line in translatorsStat %}
+            <tr class="{% cycle 'odd' 'even' %}">
+            {% for cell in line %}
+                <td>{{ cell }}</td>
+            {% endfor %}
+            </tr>
+         {% endfor %}
+    </table><hr />
+
     <h3>Les fichiers à traduire en priorité pour le coeur de KDE</h3>
     <table class="poFiles">
         <thead><tr>

@@ -57,7 +57,7 @@ def statsPage(type="gui"):
     # Non empty branches
     branches=[b for b in Branch.objects.all() if b.module_set.count()!=0]
 
-    # Base query seperfect["all"]=pos_perfect.count()t used to build stats - indicators are explainted below
+    # Base query used to build stats - indicators are explainted below
     pos=Pofile.objects.filter(type=type)
     pos_completed=pos.filter(fuzzy=0).filter(untranslated=0)
     pos_perfect=pos_completed.filter(error=0)
@@ -81,6 +81,19 @@ def statsPage(type="gui"):
         stat.append(pos_perfect.filter(module__branch=branch).count())
         poNumber.append(stat)
 
+    # Some stats about translators
+    # Each row is composed of indicator name and its value
+    translators=Translator.objects.filter(pofile__type=type)
+    activePos=pos.filter(translator__isnull=False)
+    translatorsStat=[]
+    translatorsStat.append(["Traducteurs inscrits", translators.count()])
+    translatorsStat.append(["Traducteurs actifs", translators.filter(pofile__pk__isnull=False).distinct().count()])
+    translatorsStat.append(["Nombre moyen de fichiers gérés par traducteur", activePos.count()/translators.count()])
+    translatorsStat.append(["Nombre moyen de messages gérés par traducteur",
+                            sum([p.total() for p in activePos])/translators.count()])
+    translatorsStat.append(["Nombre moyen de messages à traduire par traducteur",
+                            sum([p.untranslated+p.fuzzy for p in activePos])/translators.count()])
+
     # To PO that need works in core KDE modules
     urgentPo=Pofile.objects.filter(module__name__startswith="kde").exclude(module__name="kdereview") # Core KDE modules
     urgentPo=urgentPo.filter(~Q(untranslated=0) | ~Q(fuzzy=0)).order_by("untranslated", "fuzzy").reverse() # That need word
@@ -90,6 +103,7 @@ def statsPage(type="gui"):
                        "mail" : MAIL,
                        "branches" : [b.name for b in branches]+["all"],
                        "poNumber" : poNumber,
+                       "translatorsStat": translatorsStat,
                        "urgentPo" : urgentPo,
                        "now" : datetime.now()
                        })

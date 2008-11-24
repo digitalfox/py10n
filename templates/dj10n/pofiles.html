@@ -29,10 +29,10 @@ $mail="{{ mail|safe }}";
                Statistiques de traduction
                </a>
        </li></ul></div><hr />
-{% for branch in branches %}
+{% for branch, modules in branches.items %}
     <h3>Branche {{ branch.name }}</h3>
     <table class="packages"><tr>
-    {% for module in branch.module_set.all %}
+    {% for module in modules %}
         <td><a href='#{{ module.name }}'>{{ module.name }}</a></td>
         {% cycle '' '' '' '</tr><tr>' %}
     {% endfor %}

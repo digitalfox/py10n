@@ -16,7 +16,7 @@ def bookingPage(type="gui"):
     template=get_template("dj10n/pofiles.html")
     branches={}
     for branch in Branch.objects.filter(module__pk__isnull=False).distinct():
-        branches[branch]=branch.module_set.filter(type=type)
+        branches[branch]=branch.module_set.filter(type=type).filter(pofile__pk__isnull=False).distinct()
 
     contexte=Context({"name" : PY10N_NAME,
                        "mail" : PY10N_MAIL,

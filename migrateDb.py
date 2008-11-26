@@ -65,7 +65,7 @@ def main():
                 p.startdate=None
             p.save()
         except IndexError:
-            print "Po does not exist: %s" % name
+            print "Po does not exist: %s" % poName
             continue
 
 if __name__ == "__main__":

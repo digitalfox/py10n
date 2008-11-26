@@ -80,7 +80,7 @@ def statsPage(type="gui"):
     # Some stats about translators
     # Each row is composed of indicator name and its value
     translators=Translator.objects.filter(pofile__type=type).distinct()
-    activePos=pos.filter(translator__isnull=False).distinct()
+    activePos=pos.exclude(translator=None)
     translatorsStat=[]
     translatorsStat.append(["Traducteurs inscrits", translators.count()])
     translatorsStat.append(["Traducteurs actifs", translators.filter(pofile__pk__isnull=False).distinct().count()])

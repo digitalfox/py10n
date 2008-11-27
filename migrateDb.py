@@ -58,7 +58,7 @@ def main():
             p=Pofile.objects.filter(name=poName, type=type)[0]
             p.translator=translator
             p.module=module
-            if startDate.count("/")==2:
+            if startDate and startDate.count("/")==2:
                 D, M, Y=startDate.split("/")
                 p.startdate="%s-%s-%s" % (Y, M, D)
             else:

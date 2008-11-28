@@ -21,7 +21,7 @@ def bookingPage(type="gui"):
     contexte=Context({"name" : PY10N_NAME,
                        "mail" : PY10N_MAIL,
                        "branches" : branches,
-                       "now" : datetime.now() })
+                       "type" : type })
     return template.render(contexte)
     
 def translatorsPage(type="gui"):
@@ -44,7 +44,7 @@ def translatorsPage(type="gui"):
                        "mail" : PY10N_MAIL,
                        "translators" : translators,
                        "orphan_pos" : Pofile.objects.filter(translator=None).filter(type=type),
-                       "now" : datetime.now()
+                       "type" : type
                        })
     return template.render(contexte)
 
@@ -101,6 +101,6 @@ def statsPage(type="gui"):
                        "poNumber" : poNumber,
                        "translatorsStat": translatorsStat,
                        "urgentPo" : urgentPo,
-                       "now" : datetime.now()
+                       "type" : type
                        })
     return template.render(contexte)

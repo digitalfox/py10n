@@ -91,7 +91,7 @@ def statsPage(type="gui"):
                             sum([p.untranslated+p.fuzzy for p in activePos])/translators.count()])
 
     # To PO that need works in core KDE modules
-    urgentPo=Pofile.objects.filter(module__name__startswith="kde").exclude(module__name="kdereview") # Core KDE modules
+    urgentPo=Pofile.objects.filter(module__name__startswith="kde").exclude(module__name__in=("kdereview", "kdevplatform")) # Core KDE modules
     urgentPo=urgentPo.filter(~Q(untranslated=0) | ~Q(fuzzy=0)).order_by("untranslated", "fuzzy").reverse() # That need word
     urgentPo=urgentPo[0:20] # 20 most urgent
 

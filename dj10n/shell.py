@@ -151,7 +151,8 @@ class Shell(cmd.Cmd):
             return
         # Translator selection
         translator=self.__selectTranslator(translatorName)
-        if translator is None:
+        #TODO: create a py10nShellException to handle errors correctly
+        if translator=="error":
             return
         
         # Removing extension .po or .pot to filename if any
@@ -232,7 +233,7 @@ class Shell(cmd.Cmd):
                                               Q(lastname__icontains=translatorName))
         if translators.count()==0:
             print "No translator match %s." % translatorName
-            return None
+            return "error"
         elif translators.count()==1:
             print "Found translator %s." % translators[0] 
             return translators[0]
@@ -247,7 +248,7 @@ class Shell(cmd.Cmd):
                 return translators[int(answser)-1]
             except Exception:
                 print "Invalid number"
-                return None
+                return "error"
     
     def __selectPo(self, poName, type):
         """ Select a PO from a name"""

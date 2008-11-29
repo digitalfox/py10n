@@ -31,7 +31,7 @@ $mail="{{ mail|safe }}";
        </li></ul></div><hr />
 
 <table class="packages"><tr>
-{% for translator in translators %}
+{% for translator in translators|dictsort:"lastname" %}
     {% cycle '' '' '' '</tr><tr>' %}
     <td><a href='#{{ translator.email }}'>{{ translator.firstname }} {{ translator.lastname }}</a></td>
 {% endfor %}
@@ -48,7 +48,7 @@ $mail="{{ mail|safe }}";
     <th class="effectuer" title="Nombre de messages comportants des erreurs selon l'outil « Pology »."><a href='#legend'>Traduits</a></th>
 </tr></thead>
 <tbody>
-{% for po in orphan_pos %}
+{% for po in orphan_pos|dictsort:"name" %}
     <tr class="{% cycle 'odd' 'even' %} {{ po.getCss }}">
     <th><a href='{{ po.webPath }}'>{{ po.name }}</a></th>
     <td class='bookingDate'>{{ po.startdate|default_if_none:"-"}}</td>
@@ -75,7 +75,7 @@ $mail="{{ mail|safe }}";
         <th class="pology" title="Nombre de messages comportants des erreurs selon l'outil « Pology »."><a href='#legend'>À vérifier</a></th>
         <th class="effectuer" title="Nombre de messages déjà traduits."><a href='#legend'>Traduits</a></th>
     </tr></thead>    
-    {% for po in translator_values.pos %}
+    {% for po in translator_values.pos|dictsort:"name" %}
         <tr class="{% cycle 'odd' 'even' %} {{ po.getCss }}">
         <th><a href='{{ po.webPath }}'>{{ po.name }}</a></th>
         <td class='bookingDate'>{{ po.startdate|date:"j b y"}}</td>

@@ -32,7 +32,7 @@ $mail="{{ mail|safe }}";
 {% for branch, modules in branches.items %}
     <h3>Branche {{ branch.name }}</h3>
     <table class="packages"><tr>
-    {% for module in modules %}
+    {% for module in modules|dictsort:"name" %}
         <td><a href='#{{ module.name }}'>{{ module.name }}</a></td>
         {% cycle '' '' '' '</tr><tr>' %}
     {% endfor %}
@@ -42,7 +42,7 @@ $mail="{{ mail|safe }}";
 
 {% for branch, modules in branches.items %}
     <h3>Branche {{ branch.name }}</h3>
-    {% for module in modules %}
+    {% for module in modules|dictsort:"name" %}
         <h3 id='{{ module.name }}'>{{ module.name }} (<span class='{{ module.branch.name }}'>{{ module.branch.name }}</span>)</h3>
         <table class="poFiles">
         <thead><tr>
@@ -55,7 +55,7 @@ $mail="{{ mail|safe }}";
             <th class="effectuer" title="Nombre de messages déjà traduits."><a href='#legend'>Traduits</a></th>
          </tr></thead>
          <tbody>
-         {% for po in module.pofile_set.all %}
+         {% for po in module.pofile_set.all|dictsort:"name" %}
             <tr class="{% cycle 'odd' 'even' %} {{ po.getCss }}">
             <th><a href='{{ po.webPath }}'>{{ po.name }}</a></th>
             {% if po.translator %}<td class='translator'><a href='mailto:{{ po.translator.email }}'>{{ po.translator.firstname }} {{ po.translator.lastname }}</a></td>

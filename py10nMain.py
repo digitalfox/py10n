@@ -91,9 +91,10 @@ def sync(type="gui"):
     else:
         modulePath="templates/docmessages"
 
+    dbTrunkModuleList=[m.name for m in Module.objects.filter(type=type)]
+
     for branch in Branch.objects.all():
         path=join(settings.PY10N_FILE_BASEPATH, branch.path, modulePath)
-        dbModuleList=[m.name for m in branch.module_set.filter(type=type)]
         try:
             fsModuleList=listdir(path)
         except OSError, e:
@@ -103,7 +104,7 @@ def sync(type="gui"):
         if branch.name=="trunk":
             # Adding modules in trunk only
             for moduleName in fsModuleList:
-                if moduleName==".svn" or moduleName in dbModuleList:
+                if moduleName==".svn" or moduleName in dbTrunkModuleList:
                     continue
                 else:
                     print "Adding %s (%s) module to database" % (moduleName, branch.name)

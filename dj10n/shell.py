@@ -107,7 +107,7 @@ class Shell(cmd.Cmd):
                                                     Q(lastname__icontains=arg)  |
                                                     Q(email__icontains=arg)):
             pos=", ".join([po.name for po in translator.pofile_set.filter(type=type)])
-            print "%s (%s): %s" % (translator, translator.email, pos)
+            print "%s (%s): %s" % (unicode(translator), translator.email, pos)
     
     def do_addTranslator(self, arg):
         # Remove quotes and < > from name
@@ -236,13 +236,13 @@ class Shell(cmd.Cmd):
             print "No translator match %s." % translatorName
             return "error"
         elif translators.count()==1:
-            print "Found translator %s." % translators[0] 
+            print "Found translator %s." % unicode(translators[0])
             return translators[0]
         else:
             print "Multiple translator match %s. Please select the good one : \n" % translatorName
             i=1
             for translator in translators:
-                print "(%d) %s" % (i, translator)
+                print "(%d) %s" % (i, unicode(translator))
                 i+=1
             answser=sys.stdin.readline()
             try:

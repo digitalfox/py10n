@@ -107,8 +107,6 @@ class Pofile(models.Model):
 
     def webPath(self):
         return "http://websvn.kde.org/*checkout*/"+self.path()
-
-
     
     def getCss(self):
         # Move this outside models ?
@@ -123,7 +121,36 @@ class Pofile(models.Model):
             css="partial"
         return css
 
-admin.site.register(Branch)
-admin.site.register(Module)
-admin.site.register(Translator)
-admin.site.register(Pofile)
+class PofileAdmin(admin.ModelAdmin):
+    list_display = ("name", "module", "translator", "startdate", "type")
+    ordering = ("module","name")
+    list_filter = ["type",]
+    date_hierarchy = "startdate"
+    search_fields = ["name", "module__name",
+                     "translator__firstname", "translator__lastname", "translator__email"]
+
+class ModuleAdmin(admin.ModelAdmin):
+    list_display= ("name", "branch", "type")
+    ordering = ("branch", "name")
+    list_filter = ["type"]
+    search_fields = ["name",]
+
+class ModuleAdminInline(admin.TabularInline):
+    model=Module
+
+class TranslatorAdmin(admin.ModelAdmin):
+    list_display = ("firstname", "lastname", "email")
+    ordering = ("lastname",)
+    search_fields = ["firstname", "lastname", "email"]
+
+class BranchAdmin(admin.ModelAdmin):
+    list_display = ("name", "path")
+    ordering = ("name",)
+    search_fields = ["name", "path"]
+    inlines = [ModuleAdminInline,]
+
+
+admin.site.register(Branch, BranchAdmin)
+admin.site.register(Module, ModuleAdmin)
+admin.site.register(Translator, TranslatorAdmin)
+admin.site.register(Pofile, PofileAdmin)

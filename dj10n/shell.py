@@ -162,24 +162,25 @@ class Shell(cmd.Cmd):
         # PO selection
         for poName in poListName:
             try:
-                po=Pofile.objects.get(name=poName, type=type)
+                pos=[Pofile.objects.get(name=poName, type=type),]
             except Pofile.DoesNotExist:
-                po=self.__selectPo(poName, type)
-            if po is None:
+                pos=self.__selectPo(poName, type)
+            if not pos:
                 print "Sorry, no PO selected, skiping to next (if any)"
                 continue
             
-            if po.translator is None:
-                self.__reservePo(translator, po)
-            else:
-                print "%s is already reserved by %s" % (po, po.translator)
-                print "Really change %s reservation ? (yes/no)" % po
-                answer=sys.stdin.readline()
-                answer=answer.strip()
-                if answer=="yes" or answer=="y":
+            for po in pos:
+                if po.translator is None:
                     self.__reservePo(translator, po)
                 else:
-                    print "Reservation is canceled for %s" % po
+                    print "%s is already reserved by %s" % (po, po.translator)
+                    print "Really change %s reservation ? (yes/no)" % po
+                    answer=sys.stdin.readline()
+                    answer=answer.strip()
+                    if answer=="yes" or answer=="y":
+                        self.__reservePo(translator, po)
+                    else:
+                        print "Reservation is canceled for %s" % po
         
     # Command help definitions
     def help_gui(self):
@@ -260,14 +261,19 @@ class Shell(cmd.Cmd):
             print "Found PO %s" % pos[0]
             return pos[0]
         else:
-            print "Multiple PO match %s. Please select the good one : \n" % poName
+            print "Multiple PO match %s. Please select the good one: \n" % poName
+            print "(0) All"
             i=1
             for po in pos:
                 print "(%d) %s / %s (%s)" % (i, po.module, po, po.module.branch)
                 i+=1
             answer=sys.stdin.readline()
             try:
-                return pos[int(answer)-1]
+                answer=int(answer)
+                if answer==0:
+                    return pos
+                else:
+                    return [pos[int(answer)-1]]
             except Exception, e:
                 print "Invalid number %s" % e
                 return None

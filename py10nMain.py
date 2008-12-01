@@ -7,7 +7,7 @@
 """Py10n main command line tool"""
 
 ## Setup django envt & django imports
-from django.core.management import setup_environ
+from django.core.management import setup_environ, execute_manager
 import settings
 setup_environ(settings)
 
@@ -209,6 +209,8 @@ def parseOptions():
               help="Work with documentation (exclusive with --gui switch)")
     parser.add_option("-g", "--gui", dest="gui", action="store_true",
               help="Work with application/gui (exclusive with --doc switch)")
+    parser.add_option("-w", "--web", dest="web", action="store_true",
+              help="Start the administration web interface")
     return parser.parse_args()
     
 def main():
@@ -218,6 +220,9 @@ def main():
     # What do we want to do ?
     if options.shell:
         Shell().loop()
+    if options.web:
+        execute_manager(settings, argv=[__file__, "runserver"])
+        exit(0)
     if options.doc and options.gui:
         print "You must choose doc *or* gui, but not both ! (see --help)"
         exit(1)

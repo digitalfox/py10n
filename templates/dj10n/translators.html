@@ -1,34 +1,6 @@
-<?php
-// Auteur:   {{ name }}
-$page_title = "Traduction en français de KDE";
-$site_root = "./";
-include_once ("functions.inc");
-include "header.inc";
-$site_title = "KDE en français";
-$site_external = true;
-$showedit = false;
-$name="{{ name }}";
-$mail="{{ mail|safe }}";
-?>
-<p>Pour toutes demandes de travaux, adressez vos courriers électroniques à
-<a href="mailto:{{ mail|safe }}">{{ name }}</a>.</p>
-<div id="sommaire"><h3>Sommaire</h3>
-       <ul><li>
-               <a href="pofiles.php">
-               <img src="../img/package.png" alt="Affectation" />
-               Fichiers de traduction classés par module
-               </a>
-       </li><li>
-               <a href="translators.php">
-               <img src="../img/affectation.png" alt="Affectation" />
-               Fichiers de traduction classés par traducteur
-               </a>
-       </li><li>
-               <a href="stats.php">
-               <img src="../img/stats.png" alt="Affectation" />
-               Statistiques de traduction
-               </a>
-       </li></ul></div><hr />
+{% extends "dj10n/base.html" %}
+
+{% block content %}
 
 <table class="packages"><tr>
 {% for translator in translators|dictsort:"lastname" %}
@@ -97,24 +69,4 @@ $mail="{{ mail|safe }}";
     </tr></tfoot></table><hr />
 {% endfor %}
 
-<div id="legend">
-                   <h3>Légende</h3>
-                   <ul>
-                   <li><strong>Traduits :</strong> Nombre de messages déjà traduits.</li>
-                   <li><strong>À traduire :</strong> Nombre de messages non traduits.</li>
-                   <li><strong>À mettre à jour :</strong> Nombre de messages dont le message origine ou le contexte a changé.</li>
-                   <li><strong>À vérifier :</strong> Nombre de messages comportants des erreurs selon l'outil « Pology ».</li>
-                   </ul>
-                   <h3>Couleurs</h3>
-                   <ul>
-                   <li><strong class="translated">fichier.po</strong> : Fichier intégralement traduit et sans erreur.</li>
-                   <li><strong class="translated hasPologyErrors">fichier.po</strong> : Fichier intégralement traduit, mais comportant des erreurs Pology.</li>
-                   <li><strong class="partial">fichier.po</strong> : Fichier partiellement traduit, et contenant éventuellement des erreurs Pology.</li>
-                   <li><strong class="untranslated">fichier.po</strong> : Aucune chaîne de caractères traduite.</li>
-                   </ul>
-                   </div>
-                   
-        <div id="lastUpdate">Dernière mise à jour : {% now "l j F Y, G:i:s" %}</div><?php
-            include "footer.inc";
-            ?>
-            
+{% endblock content %}

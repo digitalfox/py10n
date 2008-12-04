@@ -173,7 +173,7 @@ class Shell(cmd.Cmd):
                 if po.translator is None:
                     self.__reservePo(translator, po)
                 else:
-                    print "%s is already reserved by %s" % (po, po.translator)
+                    print "%s is already reserved by %s" % (po, unicode(po.translator))
                     print "Really change %s reservation ? (yes/no)" % po
                     answer=sys.stdin.readline()
                     answer=answer.strip()

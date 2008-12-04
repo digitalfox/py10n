@@ -12,7 +12,7 @@ import locale
 from django.db.models import Q
 from django.core.exceptions import ValidationError
 
-from py10n.dj10n.models import Pofile, Translator
+from py10n.dj10n.models import Branch, Module, Pofile, Translator
 
 # Default user encoding. Used to decode all input strings
 ENCODING=locale.getpreferredencoding()
@@ -181,7 +181,53 @@ class Shell(cmd.Cmd):
                         self.__reservePo(translator, po)
                     else:
                         print "Reservation is canceled for %s" % po
+
+    def do_guiSwitch(self, line):
+        """Switch a gui module from a branch to another
+        guiSwitch <branch name> <module 1> <module 2>..."""
+        self.do_switch(line, type="gui")
+
+    def do_docSwitch(self, line):
+        """Switch a doc module from a branch to another
+        docSwitch <branch name> <module 1> <module 2>..."""
+        self.do_switch(line, type="doc")
+
+    def do_switch(self, line, type="gui"):
+        """Switch a module from a branch to another"""
+        arg=line.split()
+        if len(arg)<2:
+            print "Needs at least two arguments : branch name and module name"
+            return
+        branchName=arg.pop(0)
+        try:
+            branch=Branch.objects.get(name=branchName)
+        except Branch.DoesNotExist:
+            print "Branch %s does not exist" % branchName
+            return
         
+        for moduleName in arg:
+            try:
+                print "Moving module %s to branch %s..." % (moduleName, branch)
+                module=Module.objects.get(name=moduleName)
+                module.branch=branch
+                module.save()
+            except Module.DoesNotExist:
+                print "=>Module %s does not exist (skipping)" % moduleName
+                continue
+            except Module.MultipleObjectsReturned:
+                print "=>Module %s exists in multiple branch (skipping)" % moduleName
+
+    def do_docModule(self, arg):
+        self.do_module(arg, type='doc')
+
+    def do_guiModule(self, arg):
+        self.do_module(arg, type='gui')
+
+    def do_module(self, arg, type='gui'):
+        moduleList=Module.objects.filter(type=type).filter(name__icontains=arg)
+        for module in moduleList:
+            print "%s (%s)" % (module.name, module.branch.name)
+
     # Command help definitions
     def help_gui(self):
         print "Search for gui PO file"

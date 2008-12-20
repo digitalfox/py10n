@@ -23,6 +23,7 @@ class Module(models.Model):
     name = models.CharField(max_length=90)
     branch = models.ForeignKey(Branch)
     type = models.CharField(max_length=9, choices=TYPES)
+    urgent = models.BooleanField(default=False, null=True)
     
     def __unicode__(self): return self.name
     
@@ -130,7 +131,7 @@ class PofileAdmin(admin.ModelAdmin):
                      "translator__firstname", "translator__lastname", "translator__email"]
 
 class ModuleAdmin(admin.ModelAdmin):
-    list_display= ("name", "branch", "type")
+    list_display= ("name", "branch", "type", "urgent")
     ordering = ("branch", "name")
     list_filter = ["type"]
     search_fields = ["name",]

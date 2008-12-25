@@ -19,8 +19,8 @@ from py10n.dj10n.shell import Shell
 from py10n.dj10n.pology import posieve
 
 
-from os.path import join
-from os import popen, listdir
+from os.path import exists, join
+from os import listdir
 from optparse import OptionParser
 from sys import exit
 import codecs
@@ -47,7 +47,11 @@ def statPage(filename, type):
 def poStat(pologyXmlStat, type='gui'):
     """Update PO statistics"""
     for po in Pofile.objects.filter(type=type):
-        md5sum=computePoHashValue(po.filePath())
+        path=po.poFilePath()
+        if not exists(path):
+            path=po.filePath()
+
+        md5sum=computePoHashValue(path)
         if po.md5sum!=md5sum:
             print "Processing %s" % po.name
             updateGettextStats(po)

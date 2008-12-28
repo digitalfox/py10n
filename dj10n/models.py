@@ -114,7 +114,7 @@ class Pofile(models.Model):
         if self.isPot():
             css="untranslated"
         elif self.untranslated==0 and self.fuzzy==0:
-            if self.errortho!=0:
+            if self.error!=0:
                 css="translated hasPologyErrors"
             else:
                 css="translated"

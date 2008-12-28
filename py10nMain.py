@@ -15,11 +15,12 @@ setup_environ(settings)
 from py10n.dj10n.views  import translatorsPage, bookingPage, statsPage
 from py10n.dj10n.models import Pofile, Branch, Module
 from py10n.dj10n.utils  import computePoHashValue, checkFile, updateGettextStats, updatePologyStats
+from py10n.dj10n.commit import movePos
 from py10n.dj10n.shell import Shell
 from py10n.dj10n.pology import posieve
 
 
-from os.path import exists, join
+from os.path import abspath, exists, isdir, join
 from os import listdir
 from optparse import OptionParser
 from sys import exit
@@ -215,6 +216,8 @@ def parseOptions():
               help="Work with application/gui (exclusive with --doc switch)")
     parser.add_option("-w", "--web", dest="web", action="store_true",
               help="Start the administration web interface")
+    parser.add_option("-m", "--move", dest="move",
+              help="Move po files to the right place to be committed")
     return parser.parse_args()
     
 def main():
@@ -224,12 +227,15 @@ def main():
     # What do we want to do ?
     if options.shell:
         Shell().loop()
+
     if options.web:
         execute_manager(settings, argv=[__file__, "runserver"])
         exit(0)
+
     if options.doc and options.gui:
         print "You must choose doc *or* gui, but not both ! (see --help)"
         exit(1)
+
     if options.doc:
         type="doc"
     elif options.gui:
@@ -237,6 +243,7 @@ def main():
     else:
         print "You must choose either doc (-d) or gui (-g)"
         exit(1)
+
     if options.filename and not options.type:
         print "Type must be defined for page generation (see --help)"
         exit(1)
@@ -264,7 +271,6 @@ def main():
         print "Update from SVN is not yet implemented"
     elif options.sync:
         sync(type=type)
-
     elif options.poStat:
         if options.pologyXml:
             poStat(readPologyXmlStat(options.pologyXml), type=type)
@@ -278,6 +284,12 @@ def main():
         else:
             print "pology XML path must be defined for this action"
             exit(1)
+    elif options.move:
+        path=abspath(options.move)
+        if not isdir(path):
+            print "%s is not a directory" % options.move
+            exit(1)
+        movePos(path, type=type)
     else:
         print "Use --help for help"
         exit(1)

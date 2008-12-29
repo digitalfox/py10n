@@ -1,0 +1,3 @@
+#Translator Name;Translator Email;Module;PO;Fuzzy;Untranslated{% for po in orphan_pos|dictsort:"name" %}
+none;none;{{ po.module.name }};{{ po.name }};{{ po.fuzzy }};{{ po.untranslated }}{% endfor %}{% for translator, translator_values in translators.items %}{% for po in translator_values.pos|dictsort:"name" %}
+{{ translator.firstname }} {{ translator.lastname }};{{ translator.email }};{{ po.module.name }};{{ po.name }};{{ po.fuzzy }};{{ po.untranslated }}{% endfor %}{% endfor %}

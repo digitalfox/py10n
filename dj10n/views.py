@@ -24,8 +24,14 @@ def bookingPage(type="gui"):
                        "type" : type })
     return template.render(contexte)
     
-def translatorsPage(type="gui"):
-    template=get_template("dj10n/translators.html")
+def translatorsPage(type="gui", format="html"):
+    if format=="html":
+        template=get_template("dj10n/translators.html")
+    elif format=="csv":
+        template=get_template("dj10n/translators.csv")
+    else:
+        print "Unknown page format"
+        return
     translators={}
     for translator in Translator.objects.filter(pofile__pk__isnull=False).distinct():
         translators[translator]={}

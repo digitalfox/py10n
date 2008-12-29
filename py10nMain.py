@@ -30,20 +30,6 @@ import re
 SIEVES={"check_rules":"pology-rules-errors.xml",
        "check-spell":"pology-spell-errors.xml"}
 
-def poPage(filename, type):
-    """Build the PO reservation page and write it to a file
-    @param filename: website page file name"""
-    file(filename, "w").write(bookingPage(type).encode("UTF-8"))
-
-def translatorPage(filename, type):
-    """Build the per translator page and write it to a file
-    @param filename: website page file name"""
-    file(filename, "w").write(translatorsPage(type).encode("UTF-8"))
-
-def statPage(filename, type):
-    """Build the statistics page and write it to a file
-    @param filename: website page file name"""
-    file(filename, "w").write(statsPage(type).encode("UTF-8"))
 
 def poStat(pologyXmlStat, type='gui'):
     """Update PO statistics"""
@@ -257,13 +243,14 @@ def main():
         # Choose correct type
         if options.type=="po":
             print "Creating PO page"
-            poPage(options.filename, type)
+            file(options.filename, "w").write(bookingPage(type).encode("UTF-8"))
         elif options.type=="translator":
             print "Creating Translator page"
-            translatorPage(options.filename, type)
+            file(options.filename, "w").write(translatorsPage(type).encode("UTF-8"))
+            file(options.filename[:-3]+"csv", "w").write(translatorsPage(type, format="csv").encode("UTF-8"))
         elif options.type=="stat":
             print "Creating statistics page"
-            statPage(options.filename, type)
+            file(options.filename, "w").write(statsPage(type).encode("UTF-8"))
         else:
             print "Ouha. Something goes wrong, type should have be correctly defined here !!!"
             exit(1)

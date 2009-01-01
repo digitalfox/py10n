@@ -89,7 +89,7 @@ class Shell(cmd.Cmd):
             print "PO updated"
         except ValidationError, e:
             print e
-        except Pofile.DoesNotExist:
+        except (Pofile.DoesNotExist, Pofile.MultipleObjectsReturned):
             pos=Pofile.objects.filter(name__icontains=name).filter(type=type)
             if pos.count()>0:
                 print "More than one PO match : %s" % ", ".join([po.name for po in pos])
@@ -163,7 +163,7 @@ class Shell(cmd.Cmd):
         for poName in poListName:
             try:
                 pos=[Pofile.objects.get(name=poName, type=type),]
-            except Pofile.DoesNotExist:
+            except (Pofile.DoesNotExist, Pofile.MultipleObjectsReturned):
                 pos=self.__selectPo(poName, type)
             if not pos:
                 print "Sorry, no PO selected, skiping to next (if any)"

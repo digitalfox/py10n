@@ -305,7 +305,7 @@ class Shell(cmd.Cmd):
             return None
         elif pos.count()==1:
             print "Found PO %s" % pos[0]
-            return pos[0]
+            return pos
         else:
             print "Multiple PO match %s. Please select the good one: \n" % poName
             print "(0) All"

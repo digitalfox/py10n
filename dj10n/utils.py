@@ -5,53 +5,58 @@
 
 from py10n import settings
 
-import md5, os
+import os
 from os.path import abspath, dirname, exists, isdir, join
+try:
+    from hashlib import md5
+except ImportError:
+    # before python 2.5 hashlib did not exist
+    from md5 import md5
 
 def computePoHashValue(path):
     """Compute and return  file hash value"""
     try:
-        content=file(path)
-        hashValue=md5.new(content.read()).hexdigest()
+        content = file(path)
+        hashValue = md5.new(content.read()).hexdigest()
         content.close()
         return hashValue
     except Exception, e:
         print "Ouh, something bad happens while opening file %s for md5 computation. Error was : %s" % (path, e)
 
 def updateGettextStats(po):
-    result=""
+    result = ""
     try:
-        path=po.poFilePath()
+        path = po.poFilePath()
         if not exists(path):
             # Use template
-            path=po.filePath()
-        process=os.popen("LANG=C; msgfmt --statistics %s 2>&1" % path)
-        result=process.readlines()
+            path = po.filePath()
+        process = os.popen("LANG=C; msgfmt --statistics %s 2>&1" % path)
+        result = process.readlines()
         process.close()
     except Exception, e:
         print "Cannot get statistics for file %s. Error was : %s" % (po.filePath(), e)
 
     # Set to zero all gettext stats
-    po.translated=0
-    po.fuzzy=0
-    po.untranslated=0
+    po.translated = 0
+    po.fuzzy = 0
+    po.untranslated = 0
 
     # Set new value
     for stat in result[0].split(","):
-        stats=stat.split()
-        if(stats[1]=="translated"):
-            po.translated=int(stats[0])
-        elif(stats[1]=="fuzzy"):
-            po.fuzzy=int(stats[0])
-        elif(stats[1]=="untranslated"):
-            po.untranslated=int(stats[0])
+        stats = stat.split()
+        if(stats[1] == "translated"):
+            po.translated = int(stats[0])
+        elif(stats[1] == "fuzzy"):
+            po.fuzzy = int(stats[0])
+        elif(stats[1] == "untranslated"):
+            po.untranslated = int(stats[0])
         else:
             print "Ouh. Something bad happens with msgfmt for po %s. Output was : %s" % (po.name, stat)
 
 def updatePologyStats(po, pologyXmlStat):
     if pologyXmlStat is not None and not po.isPot():
         if pologyXmlStat.has_key(po.name):
-            po.error=pologyXmlStat[po.name]
+            po.error = pologyXmlStat[po.name]
         else:
             print "Pology stat not found for %s." % po.name
 
@@ -61,12 +66,12 @@ def messagePath(type, template):
     @param template: True or False
     @returns: path as a str"""
     if template:
-        if type=="gui":
+        if type == "gui":
             return "templates/messages"
         else:
             return "templates/docmessages"
     else:
-        if type=="gui":
+        if type == "gui":
             return join(settings.PY10N_LANG, "messages")
         else:
             return join(settings.PY10N_LANG, "docmessages")
@@ -74,7 +79,7 @@ def messagePath(type, template):
 def checkFile(filename):
     """Check it is possible to write filename
     @return: True if ok, else False"""
-    filename=abspath(filename)
+    filename = abspath(filename)
     if isdir(filename):
         print "%s is a directory. Please give a full path with a filename as argument." % filename
         return False

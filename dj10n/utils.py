@@ -17,7 +17,7 @@ def computePoHashValue(path):
     """Compute and return  file hash value"""
     try:
         content = file(path)
-        hashValue = md5.new(content.read()).hexdigest()
+        hashValue = md5(content.read()).hexdigest()
         content.close()
         return hashValue
     except Exception, e:

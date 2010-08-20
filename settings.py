@@ -4,7 +4,8 @@
 from os.path import abspath, dirname, join
 
 PROJECT_PATH = abspath(dirname(__file__))
-
+DATABASE_OPTIONS = { 'charset': 'latin1', }
+ 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -14,10 +15,10 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'py10n.db'             # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
+DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+DATABASE_NAME = 'py10n'             # Or path to database file if using sqlite3.
+DATABASE_USER = 'py10n'             # Not used with sqlite3.
+DATABASE_PASSWORD = 'py10n'         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
@@ -93,12 +94,11 @@ if DEBUG:
 
 
 # Path to local SVN copy (before trunk and branches
-PY10N_FILE_BASEPATH = "/home/fox/prog/i18n/svn/"
+PY10N_FILE_BASEPATH="/home/fox/kde-i18n/svn/kde/"
 
 # l10n KDE language (must be in lowercase !)
 PY10N_LANG = "fr"
 
 # Coordinator name and mail (tips use &#64; entity for the @ in your mail addresse to fool spammers)
-PY10N_NAME = "Sébastien Renard"
-PY10N_MAIL = "Sebastien.Renard&#64;digitalfox.org"
-
+PY10N_NAME="Sébastien Renard"
+PY10N_MAIL="Renard&#64;kde.org"

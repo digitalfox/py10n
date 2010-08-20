@@ -47,10 +47,17 @@ def translatorsPage(type="gui", format="html"):
         translators[translator]["untranslated"] = untranslated
         translators[translator]["translated"] = translated
     orphanPos = Pofile.objects.filter(translator=None).filter(type=type)
+    totalOrphan = {"error":0, "fuzzy":0, "untranslated":0, "translated":0}
+    for po in orphanPos:
+        totalOrphan["error"] += po.error
+        totalOrphan["fuzzy"] += po.fuzzy
+        totalOrphan["untranslated"] += po.untranslated
+        totalOrphan["translated"] += po.translated
     contexte = Context({"name" : PY10N_NAME,
                        "mail" : PY10N_MAIL,
                        "translators" : translators,
                        "orphan_pos" : orphanPos,
+                       "totalOrphan" : totalOrphan,
                        "type" : type
                        })
     return template.render(contexte)

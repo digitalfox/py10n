@@ -34,7 +34,7 @@
 {% endfor %}
 </tbody>
 <tfoot>
-<tr><td>Totaux</td><td>&nbsp;</td><td>3070</td><td>86</td><td class='pology'>746</td><td>10743</td></tr></tfoot>
+<tr><td>Totaux</td><td>&nbsp;</td><td>{{ totalOrphan.untranslated }}</td><td>{{ totalOrphan.fuzzy }}</td><td class='pology'>{{ totalOrphan.error }}</td><td>{{ totalOrphan.translated }}</td></tr></tfoot>
 </table><hr />
 
 {% for translator, translator_values in translators.items %}

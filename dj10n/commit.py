@@ -29,6 +29,7 @@ def movePos(path, type="gui", check=True):
             print "======== %s ========" % poName
             po=Pofile.objects.get(name=poName[:-3], type=type)
             destPath=po.poFilePath()
+            #BUG: if destPath dir does not exit it should be created
             move(join(path, poName), destPath)
             print "Move %s to %s (booked by %s)" % (poName, destPath, po.translator)
             if check:

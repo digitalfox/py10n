@@ -19,23 +19,23 @@ def movePos(path, type="gui", check=True):
     @param type: gui or doc
     @type type: str
     @param check: also check files with Pology (default is True)"""
-    pos=[f for f in listdir(path) if f.endswith(".po")]
-    if len(pos)==0:
+    pos = [f for f in listdir(path) if f.endswith(".po")]
+    if len(pos) == 0:
         print "No po file found"
         return
     print "About to move %s pos" % len(pos)
     for poName in pos:
         try:
             print "======== %s ========" % poName
-            po=Pofile.objects.get(name=poName[:-3], type=type)
-            destPath=po.poFilePath()
+            po = Pofile.objects.get(name=poName[:-3], type=type)
+            destPath = po.poFilePath()
             #BUG: if destPath dir does not exit it should be created
             move(join(path, poName), destPath)
             print "Move %s to %s (booked by %s)" % (poName, destPath, po.translator)
             if check:
                 for sieve, options in (("check_rules", (("lang", PY10N_LANG),)),
                                        ("check_spell", (("lang", PY10N_LANG),)),
-                                       ("-c check_xml-kde4", ())):
+                                       ("-c check_kde4", ())):
                     print "Checking %s with %s" % (poName, sieve)
                     posieve(sieve, options, destPath)
         except Pofile.DoesNotExist:
@@ -44,4 +44,3 @@ def movePos(path, type="gui", check=True):
         except Pofile.MultipleObjectsReturned:
             print "More than one PO match %s. Do it manually" % poName
             continue
- 

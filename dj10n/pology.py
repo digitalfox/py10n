@@ -14,12 +14,12 @@ def posieve(sieve, options, target):
        @options: list of (key, value) that will be give to pology as -skey:value
        """
     try:
-        pologyPath=join(settings.PY10N_FILE_BASEPATH, "trunk/l10n-support/")
-        optionsString=" ".join("-s%s:%s" % (k, v) for (k, v) in options)
-        cmd="%s/pology/scripts/posieve.py %s %s %s" % \
+        pologyPath = join(settings.PY10N_FILE_BASEPATH, "trunk/l10n-support/")
+        optionsString = " ".join("-s%s:%s" % (k, v) for (k, v) in options)
+        cmd = "%s/pology/scripts/posieve.py -b %s %s %s" % \
             (pologyPath, optionsString, sieve, target)
-        process=popen(cmd)
-        result=process.readlines()
+        process = popen(cmd)
+        result = process.readlines()
         process.close()
         print "".join(result)
     except Exception, e:

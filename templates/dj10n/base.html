@@ -1,32 +1,33 @@
+{% load i18n %}
 <?php
-// Auteur:   {{ name }}
-$page_title = "Traduction en français de KDE";
+// Author:   {{ name }}
+$page_title = '{% trans "KDE translation in <your language>" %}';
 $site_root = "./";
 include_once ("functions.inc");
 include "header.inc";
-$site_title = "KDE en français";
+$site_title = '{% trans "KDE in <your language>" %}';
 $site_external = true;
 $showedit = false;
 $name="{{ name }}";
 $mail="{{ mail|safe }}";
 ?>
-<p>Pour toutes demandes de travaux, adressez vos courriers électroniques à
+<p>{% trans "If you want to book somes files, send mail to: " %}
 <a href="mailto:{{ mail|safe }}">{{ name }}</a>.</p>
-<div id="sommaire"><h3>Sommaire</h3>
+<div id="sommaire"><h3>{% trans "Table of contents" %}</h3>
        <ul><li>
        <a href="pofiles.php">
                <img src="../img/package.png" alt="Affectation" />
-               Fichiers de traduction classés par module
+               {% trans "Translation files sorted by module" %}
                </a>
        </li><li>
                <a href="translators.php">
                <img src="../img/affectation.png" alt="Affectation" />
-               Fichiers de traduction classés par traducteur
+               {% trans "Translation files sorted by translator" %}
                </a>
        </li><li>
                <a href="stats.php">
                <img src="../img/stats.png" alt="Affectation" />
-               Statistiques de traduction
+               {% trans "Translation statistics" %}
                </a>
        </li></ul></div><hr />
 
@@ -35,22 +36,22 @@ $mail="{{ mail|safe }}";
 
 {% block legend %}
 <div id="legend">
-<h3>Légende</h3>
+<h3>{% trans "Legend" %}</h3>
 <ul>
-   <li><strong>Traduits :</strong> Nombre de messages déjà traduits.</li>
-   <li><strong>À traduire :</strong> Nombre de messages non traduits.</li>
-   <li><strong>À mettre à jour :</strong> Nombre de messages dont le message origine ou le contexte a changé.</li>
-   <li><strong>À vérifier :</strong> Nombre de messages comportants des erreurs selon l'outil « Pology ».</li>
+   <li><strong>{% trans "Translated: " %}</strong> {% trans "Number of already translated messages" %}</li>
+   <li><strong>{% trans "Untranslated: " %}</strong>{% trans "Number of untranslated messages" %}</li>
+   <li><strong>{% trans "Fuzzy: "%}</strong>{% trans "Number of messages who's context of original message changed" %}</li>
+   <li><strong>{% trans "To be checked" %}</strong>{% trans "Number of messages that have pology errors" %}</li>
 </ul>
-<h3>Couleurs</h3>
+<h3>{% trans "Colors" %}</h3>
 <ul>
-   <li><strong class="translated">fichier.po</strong> : Fichier intégralement traduit et sans erreur.</li>
-   <li><strong class="translated hasPologyErrors">fichier.po</strong> : Fichier intégralement traduit, mais comportant des erreurs Pology.</li>
-   <li><strong class="partial">fichier.po</strong> : Fichier partiellement traduit, et contenant éventuellement des erreurs Pology.</li>
-   <li><strong class="untranslated">fichier.po</strong> : Aucune chaîne de caractères traduite.</li>
+   <li><strong class="translated">{% trans "file.po: " %}</strong>{% trans "Fully translated file without error" %}</li>
+   <li><strong class="translated hasPologyErrors">{% trans "file.po: " %}</strong>{% trans "Fully translated file with pology errors" %}</li>
+   <li><strong class="partial">{% trans "file.po: " %}</strong>{% trans "Partially translated file with potential pology errors" %}</li>
+   <li><strong class="untranslated">{% trans "file.pot: " %}</strong>{% trans "Untranslated file" %}</li>
 </ul>
 </div>
 {% endblock legend %}
  
-<div id="lastUpdate">Dernière mise à jour : {% now "l j F Y, G:i:s" %}</div>
+<div id="lastUpdate">{% trans "Last update: " %}{% now "l j F Y, G:i:s" %}</div>
 <?php include "footer.inc"; ?>

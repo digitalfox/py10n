@@ -1,0 +1,153 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Sébastien Renard <renard@kde.org>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-08-11 15:53+0200\n"
+"PO-Revision-Date: 2011-08-11 15:52+0200\n"
+"Last-Translator: Sébastien Renard <renard@kde.org>\n"
+"Language-Team: French <kde-francophone@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+"Language: fr\n"
+"X-Generator: Lokalize 1.2\n"
+
+#: templates/dj10n/base.html:4
+msgid "KDE translation in <your language>"
+msgstr "Traduction en français de KDE"
+
+#: templates/dj10n/base.html:8
+msgid "KDE in <your language>"
+msgstr "KDE en français"
+
+#: templates/dj10n/base.html:14
+msgid "If you want to book somes files, send mail to: "
+msgstr ""
+"Pour toutes demandes de travaux, adressez vos courriers électroniques à : "
+
+#: templates/dj10n/base.html:16
+msgid "Table of contents"
+msgstr "Sommaire"
+
+#: templates/dj10n/base.html:20
+msgid "Translation files sorted by module"
+msgstr "Fichiers de traduction classés par module"
+
+#: templates/dj10n/base.html:25
+msgid "Translation files sorted by translator"
+msgstr "Fichiers de traduction classés par traducteur"
+
+#: templates/dj10n/base.html:30
+msgid "Translation statistics"
+msgstr "Statistiques de traduction"
+
+#: templates/dj10n/base.html:39
+msgid "Legend"
+msgstr "Légende"
+
+#: templates/dj10n/base.html:41
+msgid "Translated: "
+msgstr "Traduits : "
+
+#: templates/dj10n/base.html:41
+msgid "Number of already translated messages"
+msgstr "Nombre de messages déjà traduits"
+
+#: templates/dj10n/base.html:42
+msgid "Untranslated: "
+msgstr "À traduire : "
+
+#: templates/dj10n/base.html:42
+msgid "Number of untranslated messages"
+msgstr "Nombre de messages non traduits"
+
+#: templates/dj10n/base.html:43
+msgid "Fuzzy: "
+msgstr "À mettre à jour :"
+
+#: templates/dj10n/base.html:43
+msgid "Number of messages who's context of original message changed"
+msgstr "Nombre de messages dont le message origine ou le contexte a changé"
+
+#: templates/dj10n/base.html:44 templates/dj10n/pofiles.html:26
+msgid "To be checked"
+msgstr "À vérifier"
+
+#: templates/dj10n/base.html:44
+msgid "Number of messages that have pology errors"
+msgstr "Nombre de messages comportant des erreurs selon l'outil « Pology »."
+
+#: templates/dj10n/base.html:46
+msgid "Colors"
+msgstr "Couleurs"
+
+#: templates/dj10n/base.html:48 templates/dj10n/base.html.py:49
+#: templates/dj10n/base.html:50
+msgid "file.po: "
+msgstr "fichier.po : "
+
+#: templates/dj10n/base.html:48
+msgid "Fully translated file without error"
+msgstr "Fichier intégralement traduit et sans erreur"
+
+#: templates/dj10n/base.html:49
+msgid "Fully translated file with pology errors"
+msgstr "Fichier intégralement traduit, mais comportant des erreurs Pology"
+
+#: templates/dj10n/base.html:50
+msgid "Partially translated file with potential pology errors"
+msgstr ""
+"Fichier partiellement traduit, et contenant éventuellement des erreurs Pology"
+
+#: templates/dj10n/base.html:51
+msgid "file.pot: "
+msgstr "Fichier.pot : "
+
+#: templates/dj10n/base.html:51
+msgid "Untranslated file"
+msgstr "Aucune chaîne de caractères traduite."
+
+#: templates/dj10n/base.html:56
+msgid "Last update: "
+msgstr "Dernière mise à jour : "
+
+#: templates/dj10n/pofiles.html:6
+#, python-format
+msgid "%(branchname)s branch"
+msgstr "Branche %(branchname)s"
+
+#: templates/dj10n/pofiles.html:21
+msgid "Name"
+msgstr "Nom"
+
+#: templates/dj10n/pofiles.html:22
+msgid "Booked by"
+msgstr "Affectation"
+
+#: templates/dj10n/pofiles.html:23
+msgid "Booking date"
+msgstr "Date d'affectation"
+
+#: templates/dj10n/pofiles.html:24
+msgid "To be translated"
+msgstr "À traduire"
+
+#: templates/dj10n/pofiles.html:25
+msgid "To be updated"
+msgstr "À mettre à jour"
+
+#: templates/dj10n/pofiles.html:27
+msgid "Translated"
+msgstr "Traduits"
+
+#: templates/dj10n/pofiles.html:34
+msgid "Available file"
+msgstr "Fichier à réserver"
+
+#~ msgid "Sommaire"
+#~ msgstr "Sommaire"

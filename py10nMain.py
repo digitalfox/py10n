@@ -138,7 +138,7 @@ def sync(type="gui"):
         path=join(settings.PY10N_FILE_BASEPATH, module.branch.path, modulePath, module.name)
         dbPoList=[f.name for f in module.pofile_set.all()]
         try:
-            fsPoList=[p[:-4] for p in listdir(path) if p!=".svn"]
+            fsPoList=[p[:-4] for p in listdir(path) if p[-4:]==".pot"]
             #print list(fsPoList)
         except OSError, e:
             print "Cannot find module %s at %s (%s). Skipping" % (module.name, path, e)

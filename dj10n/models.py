@@ -11,22 +11,22 @@ from py10n.dj10n.utils import messagePath
 
 from os.path import join
 
-TYPES=(("gui", "Application"), ("doc", "Documentation"))
+TYPES = (("gui", "Application"), ("doc", "Documentation"))
 
 class Branch(models.Model):
     name = models.CharField(max_length=90, unique=True)
     path = models.CharField(max_length=90, unique=True)
-    
+
     def __unicode__(self): return self.name
 
 class Module(models.Model):
     name = models.CharField(max_length=90)
     branch = models.ForeignKey(Branch)
     type = models.CharField(max_length=9, choices=TYPES)
-    urgent = models.BooleanField(default=False, null=True)
-    
+    urgent = models.BooleanField(default=False)
+
     def __unicode__(self): return self.name
-    
+
     def templatePath(self):
         return join(self.branch.path,
                     messagePath(self.type, True),
@@ -40,7 +40,7 @@ class Translator(models.Model):
     firstname = models.CharField(max_length=150)
     lastname = models.CharField(max_length=150)
     email = models.CharField(max_length=150)
-    
+
     def __unicode__(self): return "%s %s" % (self.firstname, self.lastname)
 
 class PofileManager(models.Manager):
@@ -61,26 +61,26 @@ class Pofile(models.Model):
     fuzzy = models.IntegerField(default=0)
     translated = models.IntegerField(default=0)
     type = models.CharField(max_length=9, choices=TYPES)
-    
-    objects=PofileManager() # Custom manager
-    
+
+    objects = PofileManager() # Custom manager
+
     def __unicode__(self): return self.name
 
     def total(self):
-        return self.untranslated+self.fuzzy+self.translated
+        return self.untranslated + self.fuzzy + self.translated
 
     def isPot(self):
-        if self.translated+self.fuzzy==0:
+        if self.translated + self.fuzzy == 0:
             return True
         else:
             return False
 
     def isGui(self):
-        if self.type=="gui":
+        if self.type == "gui":
             return True
         else:
             return False
-    
+
     def isDoc(self):
         return not self.isGui()
 
@@ -94,7 +94,7 @@ class Pofile(models.Model):
         return join(self.module.branch.path,
                     messagePath(self.type, self.isPot()),
                     self.module.name,
-                    self.name+self.suffix())
+                    self.name + self.suffix())
 
     def filePath(self):
         return join(settings.PY10N_FILE_BASEPATH, self.path())
@@ -104,20 +104,20 @@ class Pofile(models.Model):
                     self.module.branch.path,
                     messagePath(self.type, False),
                     self.module.name,
-                    self.name+".po")
+                    self.name + ".po")
 
     def webPath(self):
-        return "http://websvn.kde.org/*checkout*/"+self.path()
-    
+        return "http://websvn.kde.org/*checkout*/" + self.path()
+
     def getCss(self):
         # Move this outside models ?
         if self.isPot():
-            css="untranslated"
-        elif self.untranslated==0 and self.fuzzy==0:
-            if self.error!=0:
-                css="translated hasPologyErrors"
+            css = "untranslated"
+        elif self.untranslated == 0 and self.fuzzy == 0:
+            if self.error != 0:
+                css = "translated hasPologyErrors"
             else:
-                css="translated"
+                css = "translated"
         else:
-            css="partial"
+            css = "partial"
         return css

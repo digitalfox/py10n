@@ -4,7 +4,7 @@
 from os.path import abspath, dirname, join
 
 PROJECT_PATH = abspath(dirname(__file__))
- 
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -77,22 +77,28 @@ TEMPLATE_DIRS = (
     join(PROJECT_PATH, "templates")
 )
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
     'py10n.dj10n'
-)
+]
+
+if DEBUG:
+    INSTALLED_APPS.extend(('debug_toolbar',
+                           'django_extensions',))
+
+
 
 # Path to local SVN copy (before trunk and branches
-PY10N_FILE_BASEPATH="/home/fox/prog/i18n/svn/"
+PY10N_FILE_BASEPATH = "/home/fox/prog/i18n/svn/"
 
 # l10n KDE language (must be in lowercase !)
-PY10N_LANG="fr"
+PY10N_LANG = "fr"
 
 # Coordinator name and mail (tips use &#64; entity for the @ in your mail addresse to fool spammers)
-PY10N_NAME="Sébastien Renard"
-PY10N_MAIL="Sebastien.Renard&#64;digitalfox.org"
+PY10N_NAME = "Sébastien Renard"
+PY10N_MAIL = "Sebastien.Renard&#64;digitalfox.org"
 

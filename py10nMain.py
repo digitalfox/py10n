@@ -6,7 +6,7 @@
 
 """Py10n main command line tool"""
 
-## Setup django envt & django imports
+# # Setup django envt & django imports
 from django.core.management import setup_environ, execute_manager
 import settings
 setup_environ(settings)
@@ -70,7 +70,7 @@ def readPologyXmlStat(pologyXmlPath):
 def createPologyXMLStat(pologyXmlPath, type="gui", sieve="check_rules"):
     """Create POlogy xml errors file for all modules
     @param pologyXMLPath: Path where XML file will be write"""
-    #TODO: use new function from Pology modules
+    # TODO: use new function from Pology modules
     mPath = " ".join([join(settings.PY10N_FILE_BASEPATH, m.poPath()) for m in Module.objects.filter(type=type) if m.pofile_set.count() > 0])
     posieve(sieve, [("xml", join(pologyXmlPath, SIEVES[sieve])), ("lang", settings.PY10N_LANG)], mPath)
 
@@ -92,18 +92,17 @@ def sync(type="gui"):
             print "Cannot find template dir for branch %s (%s)" % (branch.name, e)
             continue
 
-        if branch.name == "trunk":
-            # Adding modules in trunk only
-            for moduleName in fsModuleList:
-                if moduleName == ".svn" or moduleName in dbTrunkModuleList:
-                    continue
-                else:
-                    print "Adding %s (%s) module to database" % (moduleName, branch.name)
-                    m = Module()
-                    m.branch = branch
-                    m.name = moduleName
-                    m.type = type
-                    m.save()
+        # Adding modules in trunk only
+        for moduleName in fsModuleList:
+            if moduleName == ".svn" or moduleName in dbTrunkModuleList:
+                continue
+            else:
+                print "Adding %s (%s) module to database" % (moduleName, branch.name)
+                m = Module()
+                m.branch = branch
+                m.name = moduleName
+                m.type = type
+                m.save()
 
         # Removing modules
         for module in branch.module_set.filter(type=type):
@@ -115,7 +114,7 @@ def sync(type="gui"):
                     print "Module %s (%s) does not exist anymore but still have pofile." % (module.name, branch.name)
 
     # Adding/removing po
-    poToBeRemoved = set() # Don't destroyed immediately PO to detect their move
+    poToBeRemoved = set()  # Don't destroyed immediately PO to detect their move
 
     # Removing po
     for module in Module.objects.filter(type=type):
@@ -123,7 +122,6 @@ def sync(type="gui"):
         dbPoList = [f.name for f in module.pofile_set.all()]
         try:
             fsPoList = [p[:-4] for p in listdir(path) if p != ".svn"]
-            #print list(fsPoList)
         except OSError, e:
             print "Cannot find module %s at %s (%s). Skipping" % (module.name, path, e)
             continue
@@ -139,7 +137,6 @@ def sync(type="gui"):
         dbPoList = [f.name for f in module.pofile_set.all()]
         try:
             fsPoList = [p[:-4] for p in listdir(path) if p[-4:] == ".pot"]
-            #print list(fsPoList)
         except OSError, e:
             print "Cannot find module %s at %s (%s). Skipping" % (module.name, path, e)
             continue
@@ -167,6 +164,7 @@ def sync(type="gui"):
     for po in poToBeRemoved:
         print "Removed from database : %s/%s (%s)" % (po.module.name, po.name, po.module.branch.name)
         po.delete()
+
 
 def parseOptions():
     """Command line option parsing"""

@@ -6,7 +6,7 @@ from os.path import abspath, dirname, join
 PROJECT_PATH = abspath(dirname(__file__))
 DATABASE_OPTIONS = { 'charset': 'latin1', }
  
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (

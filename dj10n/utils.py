@@ -60,21 +60,26 @@ def updatePologyStats(po, pologyXmlStat):
         else:
             print "Pology stat not found for %s." % po.name
 
-def messagePath(type, template):
+def messagePath(type, template, branch):
     """Build the message path
     @param type: gui or doc
     @param template: True or False
+    @param branch: branch name, used to detect special branch path like summit branch
     @returns: path as a str"""
+    if branch == "summit":
+        prefix = "summit"
+    else:
+        prefix = ""
     if template:
         if type == "gui":
-            return "templates/messages"
+            return join("templates", prefix, "messages")
         else:
-            return "templates/docmessages"
+            return join("templates", prefix, "docmessages")
     else:
         if type == "gui":
-            return join(settings.PY10N_LANG, "messages")
+            return join(settings.PY10N_LANG, prefix, "messages")
         else:
-            return join(settings.PY10N_LANG, "docmessages")
+            return join(settings.PY10N_LANG, prefix, "docmessages")
 
 def checkFile(filename):
     """Check it is possible to write filename

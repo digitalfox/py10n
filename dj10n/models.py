@@ -29,11 +29,11 @@ class Module(models.Model):
 
     def templatePath(self):
         return join(self.branch.path,
-                    messagePath(self.type, True),
+                    messagePath(self.type, True, self.branch.name),
                     self.name)
     def poPath(self):
         return join(self.branch.path,
-                    messagePath(self.type, False),
+                    messagePath(self.type, False, self.branch.name),
                     self.name)
 
 class Translator(models.Model):
@@ -62,7 +62,7 @@ class Pofile(models.Model):
     translated = models.IntegerField(default=0)
     type = models.CharField(max_length=9, choices=TYPES)
 
-    objects = PofileManager() # Custom manager
+    objects = PofileManager()  # Custom manager
 
     def __unicode__(self): return self.name
 
@@ -92,7 +92,7 @@ class Pofile(models.Model):
 
     def path(self):
         return join(self.module.branch.path,
-                    messagePath(self.type, self.isPot()),
+                    messagePath(self.type, self.isPot(), self.module.branch.name),
                     self.module.name,
                     self.name + self.suffix())
 
@@ -102,7 +102,7 @@ class Pofile(models.Model):
     def poFilePath(self):
         return join(settings.PY10N_FILE_BASEPATH,
                     self.module.branch.path,
-                    messagePath(self.type, False),
+                    messagePath(self.type, False, self.module.branch.name),
                     self.module.name,
                     self.name + ".po")
 

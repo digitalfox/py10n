@@ -16,7 +16,7 @@ def posieve(sieve, options, target):
     try:
         pologyPath=join(settings.PY10N_FILE_BASEPATH, "trunk/l10n-support/")
         optionsString=" ".join("-s%s:%s" % (k, v) for (k, v) in options)
-        cmd="python2.6 %s/pology/scripts/posieve.py -b %s %s %s" % \
+        cmd="python %s/pology/scripts/posieve.py -b %s %s %s" % \
             (pologyPath, optionsString, sieve, target)
         process = popen(cmd)
         result = process.readlines()
